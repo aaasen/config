@@ -28,6 +28,12 @@ alias la="ls -a" #all files
 alias ll="ls -l" #long listing format
 alias lx="ls -x" #grouped by file extension
 
+#cd
+alias ..="cd .."
+alias j="cd .."
+alias ...="cd ../.."
+alias jj="cd ../.."
+
 #pacman
 alias get="sudo pacman -S " #install package
 alias sget="pacman -Ss " #search package database
@@ -78,6 +84,7 @@ alias cwicd="wicd-curses"
 #minecraft
 alias mine="java -Xmx4096M -Xms1024M -jar ~/.minecraft/minecraft.jar"
 #alias mineserver="cd /usr/local/games/minecraft && java -Xmx2048M -Xms1024M -jar server.jar nogui"
+alias minelogc="rm ~/hs_err_pid*.log"
 
 #graphics
 alias atiup="sudo rm /etc/ati/amdpcsdb && echo 'start xmonad and then run amdccle'"
@@ -91,3 +98,20 @@ alias fehslide="fehimg -D 5"
 alias fehfilter="sudo fehslide -A 'echo %F && rm %F'"
 alias fehsliderand="fehslide -z"
 
+#functions
+function md() { #mkdir and cd into it
+    mkdir -p "$1" && cd "$1"
+}
+
+function cd() { #cd into dir and then ls
+    builtin cd "${@:-$HOME}" && ls -cr
+}
+
+function connected() { 
+    ping -c1 -w2 google.com | grep -c '1 received';
+}
+
+function bac() {
+    export VERSION_CONTROL=numbered
+    cp --force --backup $1 $1
+}
