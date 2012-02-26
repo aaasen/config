@@ -1,0 +1,14 @@
+Xft.dpi:80
+Xft.antialias:1
+Xft.hinting:1
+Xft.hintstyle:hintfull
+Xft.rgba:rgb
+
+URxvt.font:-*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
+URxvt.scrollBar:off
+URxvt.background:Black
+URxvt.foreground:grey80
+!URxvt.transparent:on
+!URxvt.fading:20
+URxvt.shading:20
+
