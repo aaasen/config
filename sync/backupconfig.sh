@@ -23,12 +23,21 @@ loadfileroster () {
     exec 0<&10 10<&-
 }
 
+#goes through FILES and replaces ~ with $HOME etc.
+#expandfiles()
+# TODO: /home/aasen/ should be replaced with $HOME
+expandfiles () {
+    for (( i=0; i<${#FILES[@]}; i++ )); do
+	FILES[$i]=`echo ${FILES[${i}]} | sed 's/~/\/home\/aasen/g'`
+    done
+}
+
 #copies all files listed in FILES into a directory
 #cpfilestodir(dirname)
 cpfilestodir () {
     mkdir $1
     for (( i=0; i<${#FILES[@]}; i++ )); do
-	cp ${FILES[${i}]} dirname/
+	cp ${FILES[${i}]} $1/
     done
 }
 
@@ -45,13 +54,22 @@ gzdir () {
     mkdir tmpgzip
     tar -czvf tmpgzip/a.tar.gz $1
 
-    export VERSION_CONTROL=existing
+    export VERSION_CONTROL=numbered
     cp --backup tmpgzip/a.tar.gz ${1%/}`generateuuid`.tar.gz
 
-    echo ${1%/}`generateuuid`.tar.gz
+    rm -R tmpgzip
 }
 
-loadfileroster $1
+#archives local config files from fileroster
+#arcconfig()
+arcconfig () {
+    loadfileroster $1
+    expandfiles
+    cpfilestodir config
+    gzdir config
+    rm -R config
+}
 
-echo num elements: ${#FILES[@]}
-echo ${FILES[@]}
+#echo ${FILES[@]}
+
+arcconfig fileroster
