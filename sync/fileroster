@@ -1,6 +1,3 @@
-#files to be synchronized
-
-"files" {
 home/.xmonad
 home/.Xresources
 home/.bash_profile
@@ -8,4 +5,3 @@ home/.bashrc
 home/.dir_colors
 home/.xinitrc
 home/.xmobarrc
-}
