@@ -24,12 +24,10 @@ loadfileroster () {
 }
 
 #goes through FILES and replaces ~ with $HOME etc.
-#expandfiles()
+#expandfiles(file)
 # TODO: /home/aasen/ should be replaced with $HOME
 expandfiles () {
-    for (( i=0; i<${#FILES[@]}; i++ )); do
-	FILES[$i]=`echo ${FILES[${i}]} | sed 's/~/\/home\/aasen/g'`
-    done
+    sed -i $(echo s/~/$(echo $HOME | sed 's/\//\\\//g')/g) $1
 }
 
 #copies all files listed in FILES into a directory
@@ -63,9 +61,10 @@ gzdir () {
 #archives local config files from fileroster
 #arcconfig()
 arcconfig () {
+    expandfiles $1
     loadfileroster $1
-    expandfiles
     cpfilestodir config
+    touch {pre,post}gz
     ls > pregz
     gzdir config
     ls > postgz
@@ -78,3 +77,5 @@ arcconfig () {
 #echo ${FILES[@]}
 
 arcconfig fileroster
+
+#expandfiles fileroster
