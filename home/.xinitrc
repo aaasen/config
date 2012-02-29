@@ -8,15 +8,7 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 # merge in defaults and keymaps
 
 if [ -f $sysresources ]; then
-
-
-
-
-
-
-
     xrdb -merge $sysresources
-
 fi
 
 if [ -f $sysmodmap ]; then
@@ -24,15 +16,7 @@ if [ -f $sysmodmap ]; then
 fi
 
 if [ -f "$userresources" ]; then
-
-
-
-
-
-
-
     xrdb -merge "$userresources"
-
 fi
 
 if [ -f "$usermodmap" ]; then
@@ -41,7 +25,6 @@ fi
 
 # start some nice programs
 
-
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	for f in /etc/X11/xinit/xinitrc.d/* ; do
 		[ -x "$f" ] && . "$f"
@@ -49,19 +32,22 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	unset f
 fi
 
+#set up terminus (and other) fonts
 xset +fp /usr/share/fonts/local
 xset fp rehash
 
+#swap control and capslock
 setxkbmap -option ctrl:swapcaps
 
-# prepare the wm
+#prepare xmonad
 xrdb -merge ~/.Xresources
 xsetroot -cursor_name left_ptr
 feh --bg-scale  ~/.res/arch-bg.jpg
 
+#start nice programs
 urxvtd &
+emacs --daemon &
 unclutter &
 mpd &
-emacs --daemon &
 redshift -O 7000 &
 xmonad
