@@ -74,8 +74,36 @@ arcconfig () {
     rm -R config
 }
 
+#archives local config files and then replaces them with those from local clone of the local repo clone
+#updateconfig(files)
+# TODO: make pullconfig work for a list of files
+updateconfig () {
+    arcconfig fileroster
+    for (( i=0; i<${#FILES[@]}; i++ )); do
+	cp ../home/`echo ${FILES[${i}]} | grep -Eo '[^/]+$'` ${FILES[${i}]}
+    done
+}
+
+#copies local files into local clone of git repo then adds the changes to git
+#commitconfig(files)
+commitconfig () {
+    expandfiles fileroster
+    loadfileroster fileroster
+    for (( i=0; i<${#FILES[@]}; i++ )); do
+        cp ${FILES[${i}]} ../home/`echo ${FILES[${i}]} | grep -Eo '[^/]+$'`
+	git add ../home/`echo ${FILES[${i}]} | grep -Eo '[^/]+$'`
+    done
+#    git add ../home/*
+}
+
 #echo ${FILES[@]}
 
-arcconfig fileroster
+#arcconfig fileroster
+
+#pullconfig
 
 #expandfiles fileroster
+
+commitconfig
+
+#updateconfig
