@@ -1,7 +1,7 @@
-home/.xmonad
-home/.Xresources
-home/.bash_profile
-home/.bashrc
-home/.dir_colors
-home/.xinitrc
-home/.xmobarrc
+~/.xmonad
+~/.Xresources
+~/.bash_profile
+~/.bashrc
+~/.dir_colors
+~/.xinitrc
+~/.xmobarrc
