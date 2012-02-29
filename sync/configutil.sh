@@ -6,6 +6,7 @@
 #tar and gzip that directory; name with date and time
 
 declare -a FILES
+arcconfigdir=$HOME/.arcconfig
 
 #loads files from a fileroster file which contains file paths delimited by newlines
 #loadfileroster(filename)
@@ -52,8 +53,9 @@ gzdir () {
     mkdir tmpgzip
     tar -czvf tmpgzip/a.tar.gz $1
 
+    mkdir ~/.arcconfig > /dev/null 2>&1
     export VERSION_CONTROL=numbered
-    cp --backup tmpgzip/a.tar.gz ${1%/}`generateuuid`.tar.gz
+    cp --backup tmpgzip/a.tar.gz $arcconfigdir/${1%/}`generateuuid`.tar.gz
 
     rm -R tmpgzip
 }
@@ -65,13 +67,19 @@ arcconfig () {
     loadfileroster $1
     cpfilestodir config
     touch {pre,post}gz
-    ls > pregz
+    ls $arcconfigdir > pregz
     gzdir config
-    ls > postgz
-    echo "local config archived in \""`diff pregz postgz | grep -o ">.*" | grep -o "[^> ]*"`"\""
+    ls $arcconfigdir > postgz
+    echo "local config archived in \""$arcconfigdir/`diff pregz postgz | grep -o ">.*" | grep -o "[^> ]*"`"\""
     
     rm {pre,post}gz
     rm -R config
+}
+
+#clears out the config archive directory
+#cleanconfigarc()
+cleanconfigarc () {
+    rm $arcconfigdir/*
 }
 
 #archives local config files and then replaces them with those from local clone of the local repo clone
@@ -93,17 +101,16 @@ commitconfig () {
         cp ${FILES[${i}]} ../home/`echo ${FILES[${i}]} | grep -Eo '[^/]+$'`
 	git add ../home/`echo ${FILES[${i}]} | grep -Eo '[^/]+$'`
     done
-#    git add ../home/*
 }
 
 #echo ${FILES[@]}
 
-#arcconfig fileroster
+arcconfig fileroster
 
 #pullconfig
 
 #expandfiles fileroster
 
-commitconfig
+#commitconfig
 
 #updateconfig
