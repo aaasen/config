@@ -19,7 +19,7 @@ nbc = "#777777"
 --fbc = "#96fcfc"
 fbc = "#444444"
 
-quickCommands = ["chromium","eclipse","gimp","minecraft","thunar"]
+quickCommands = ["midori","chromium","eclipse","gimp","minecraft","thunar"]
 
 defaultl = tiled ||| Mirror tiled ||| Full
    where
@@ -64,4 +64,6 @@ xmonad $ defaultConfig
 	 [((0, xF86XK_AudioLowerVolume), spawn "amixer set Master 3%-")
 	 , ((0, xF86XK_AudioRaiseVolume), spawn "amixer set Master 3%+")
 	 , ((0, xF86XK_AudioMute), spawn "amixer set Master toggle")
-	 ] `additionalKeysP` [("M-n", spawnSelected defaultGSConfig quickCommands)]
+	 ] `additionalKeysP` 
+	 [("M-n", spawnSelected defaultGSConfig quickCommands)
+	 ]
