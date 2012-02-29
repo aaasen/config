@@ -105,7 +105,7 @@ commitconfig () {
 
 #echo ${FILES[@]}
 
-arcconfig fileroster
+#arcconfig fileroster
 
 #pullconfig
 
