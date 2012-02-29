@@ -1,0 +1,390 @@
+import XMonad
+import XMonad.Layout.Spacing
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageDocks
+import XMonad.Util.Run
+import System.IO
+import XMonad.Util.EZConfig
+import Graphics.X11.ExtraTypes.XF86
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Layout.NoBorders
+import XMonad.Hooks.ManageHelpers
+import XMonad.Actions.GridSelect
+import XMonad.Hooks.SetWMName
+import XMonad.Layout.PerWorkspace
+
+
+bw = 1
+nbc = "#777777"
+--fbc = "#96fcfc"
+fbc = "#444444"
+
+quickCommands = ["chromium","eclipse","gimp","minecraft","thunar"]
+
+defaultl = tiled ||| Mirror tiled ||| Full
+   where
+	tiled = Tall nmaster delta ratio
+	nmaster = 1
+	delta = 5/100
+	ratio = 3/5
+
+medial = noBorders $ Full
+ml = onWorkspace "6" medial $ defaultl
+
+
+wspcs = ["1","2","3","4","5","6" ]
+managehook = composeAll
+	   [ isFullscreen --> doFullFloat
+	   , className =? "net-minecraft-LauncherFrame" --> doShift "6"
+	   , className =? "net-minecraft-LauncherFrame" --> doFloat
+	   ]
+
+term = "urxvtc"
+
+main = do
+xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
+xmonad $ defaultConfig
+       {
+       manageHook = manageDocks <+> managehook <+> manageHook defaultConfig
+       , handleEventHook = fullscreenEventHook
+       , startupHook = setWMName "LG3D"
+       , layoutHook = smartBorders $ avoidStruts $ ml
+       , logHook = dynamicLogWithPP xmobarPP
+       	 {
+		ppOutput = hPutStrLn xmproc
+		, ppTitle = xmobarColor "#000000" "" . shorten 50
+		, ppLayout = const ""
+		}
+	 , borderWidth = bw
+	 , normalBorderColor = nbc
+	 , focusedBorderColor = fbc
+	 , workspaces = wspcs
+	 , terminal = term
+	 } `additionalKeys`
+	 [((0, xF86XK_AudioLowerVolume), spawn "amixer set Master 3%-")
+	 , ((0, xF86XK_AudioRaiseVolume), spawn "amixer set Master 3%+")
+	 , ((0, xF86XK_AudioMute), spawn "amixer set Master toggle")
+	 ] `additionalKeysP` [("M-n", spawnSelected defaultGSConfig quickCommands)]
+Xft.dpi:80
+Xft.antialias:1
+Xft.hinting:1
+Xft.hintstyle:hintfull
+Xft.rgba:rgb
+
+URxvt.font:-*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
+URxvt.scrollBar:off
+URxvt.background:Black
+URxvt.foreground:grey80
+!URxvt.transparent:on
+!URxvt.fading:20
+URxvt.shading:20
+
+#
+# ~/.bash_profile
+#
+
+[[ -f ~/.bashrc ]] && . ~/.bashrc
+
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+    exec startx
+fi#
+# ~/.bashrc
+#
+
+if [ -f ~/.dir_colors ]; then
+    eval `dircolors ~/.dir_colors`
+fi
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+export EDITOR=emacs
+
+PS1='\[\e[1m\]\u\[\e[m\] \[\e[1;30m\]{\[\e[m\]\w\[\e[m\]\[\e[1;30m\]}\[\e[m\] \[\e[1;30m\]\$\[\e[m\] \[\e[m'
+
+complete -cf man
+complete -cf pacman
+complete -cf get
+
+#sudo for autocompletion
+complete -cf sudo
+alias sudo="sudo "
+alias s="sudo"
+
+#ls
+alias ls="ls --color=auto --group-directories-first"
+alias la="ls -a" #all files
+alias ll="ls -l" #long listing format
+alias lx="ls -x" #grouped by file extension
+
+#cd
+alias ..="cd .."
+alias j="cd .."
+alias ...="cd ../.."
+alias jj="cd ../.."
+
+#pacman
+alias get="sudo pacman -S " #install package
+alias sget="pacman -Ss " #search package database
+alias uget="sudo pacman -Syu " #update system
+alias rget="sudo pacman -Rs " #remove package
+alias cget="pacman -Qdt | egrep -o '[a-z0-9-]+ '\ | sudo pacman -Rs || echo 'no unused orphan packages to remove'" #removes unused packages
+alias iget="pacman -Qi " #information about package
+
+#yaourt
+alias yet="sudo yaourt -S " #install package
+alias syet="yaourt -Ss " #search package database
+alias uyet="sudo yaourt -Syu " #update system
+alias ryet="sudo yaourt -Rs " #remove package
+alias iyet="yaourt -Qi " #information about package
+
+#system
+alias sdown="sudo shutdown -h now"
+alias suspend="sudo pm-suspend"
+
+#miscellaneous super short names
+alias a="alsamixer"
+alias e="emacsclient -t"
+alias se="sudo emacs"
+alias n="nano"
+alias l="less"
+alias m="more" #hehe
+alias g="grep"
+alias eg="egrep"
+
+#archiving
+alias utar="tar -xf" #untar
+alias atar="tar -cavf" #infer archive format from output file name
+alias gtar="tar -czvf" #gzip
+alias btar="tar -cjvf" #bz2
+alias xtar="tar -cJvf" #xz
+
+#log files
+alias xlog="cat /var/log/Xorg.0.log | egrep -n -T \"(\(EE\)|\(WW\))\" | less"
+
+#internet
+alias snet="sudo rc.d stop network"
+alias rnet="sudo rc.d restart network"
+alias swicd="sudo rc.d start wicd"
+alias rwicd="sudo rc.d restart wicd"
+alias netwicd="sudo rc.d stop network && sudo rc.d start wicd && wicd-curses"
+alias cwicd="wicd-curses"
+
+#minecraft
+alias mine="java -Xmx4096M -Xms1024M -jar ~/.minecraft/minecraft.jar"
+#alias mineserver="cd /usr/local/games/minecraft && java -Xmx2048M -Xms1024M -jar server.jar nogui"
+alias minelogc="rm ~/hs_err_pid*.log"
+
+#graphics
+alias atiup="sudo rm /etc/ati/amdpcsdb && echo 'start xmonad and then run amdccle'"
+
+#media
+alias yget="cd ~/vid && youtube-dl -t "
+
+#feh geometry option is for tiling window managers only
+alias fehimg="feh --image-bg black -zZ. --geometry 1366x768"
+alias fehslide="fehimg -D 5"
+alias fehfilter="sudo fehslide -A 'echo %F && rm %F'"
+alias fehsliderand="fehslide -z"
+
+#functions
+function md() { #mkdir and cd into it
+    mkdir -p "$1" && cd "$1"
+}
+
+function cd() { #cd into dir and then ls
+    builtin cd "${@:-$HOME}" && ls -cr
+}
+
+function connected() { 
+    ping -c1 -w2 google.com | grep -c '1 received';
+}
+
+function bac() {
+    export VERSION_CONTROL=numbered
+    cp --force --backup $1 $1
+}
+# Configuration file for dircolors, a utility to help you set the
+# LS_COLORS environment variable used by GNU ls with the --color option.
+
+# The keywords COLOR, OPTIONS, and EIGHTBIT (honored by the
+# slackware version of dircolors) are recognized but ignored.
+
+# Below, there should be one TERM entry for each termtype that is colorizable
+TERM linux
+TERM linux-c
+TERM mach-color
+TERM console
+TERM con132x25
+TERM con132x30
+TERM con132x43
+TERM con132x60
+TERM con80x25
+TERM con80x28
+TERM con80x30
+TERM con80x43
+TERM con80x50
+TERM con80x60
+TERM dtterm
+TERM xterm
+TERM rxvt
+TERM rxvt-unicode
+TERM rxvt-unicode-256color
+TERM rxvt-unicode256
+TERM rxvt-256color
+TERM screen
+TERM screen-w
+TERM screen.rxvt
+TERM vt100
+
+# Below are the color init strings for the basic file types. A color init
+# string consists of one or more of the following numeric codes:
+# Attribute codes:
+# 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
+# Text color codes:
+# 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
+# Background color codes:
+# 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
+NORMAL 00    # global default, although everything should be something.
+FILE 00        # normal file
+DIR 01;36    # directory
+LINK 01;36    # symbolic link.  (If you set this to 'target' instead of a
+        # numerical value, the color is as for the file pointed to.)
+FIFO 40;33    # pipe
+SOCK 01;35    # socket
+DOOR 01;35    # door
+BLK 40;33;01    # block device driver
+CHR 40;33;01    # character device driver
+ORPHAN 40;31;01 # symlink to nonexistent file
+
+# This is for files with execute permission:
+EXEC 01;32
+
+# List any file extensions like '.gz' or '.tar' that you would like ls
+# to colorize below. Put the extension, a space, and the color init string.
+# (and any comments you want to add after a '#')
+
+# If you use DOS-style suffixes, you may want to uncomment the following:
+#.cmd 01;32 # executables (bright green)
+#.exe 01;32
+#.com 01;32
+#.btm 01;32
+#.bat 01;32
+
+.tar 01;31 # archives or compressed (bright red)
+.tgz 01;31
+.arj 01;31
+.taz 01;31
+.lzh 01;31
+.zip 01;31
+.z   01;31
+.Z   01;31
+.gz  01;31
+.bz2 01;31
+.deb 01;31
+.rpm 01;31
+.jar 01;31
+.tbz 01;31
+.pkg.tar.gz 01;31;40
+
+# image formats
+.jpg 01;35
+.jpeg 01;35
+.gif 01;35
+.bmp 01;35
+.pbm 01;35
+.pgm 01;35
+.ppm 01;35
+.tga 01;35
+.xbm 01;35
+.xpm 01;35
+.tif 01;35
+.tiff 01;35
+.png 01;35
+.eps 01;35
+.fig 01;35
+
+# movie formats
+.mov 01;35
+.mpg 01;35
+.mpeg 01;35
+.wmv 01;35
+.avi 01;35
+.fli 01;35
+.gl 01;35
+.dl 01;35
+.xcf 01;35
+.xwd 01;35
+
+# audio formats
+.ogg 01;35
+.mp3 01;35
+.wav 01;35
+.wma 01;35
+.flac 01;35
+.asf 01;35
+.ram 01;35#!/bin/sh
+
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
+sysresources=/etc/X11/xinit/.Xresources
+sysmodmap=/etc/X11/xinit/.Xmodmap
+
+# merge in defaults and keymaps
+
+if [ -f $sysresources ]; then
+    xrdb -merge $sysresources
+fi
+
+if [ -f $sysmodmap ]; then
+    xmodmap $sysmodmap
+fi
+
+if [ -f "$userresources" ]; then
+    xrdb -merge "$userresources"
+fi
+
+if [ -f "$usermodmap" ]; then
+    xmodmap "$usermodmap"
+fi
+
+# start some nice programs
+
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+	for f in /etc/X11/xinit/xinitrc.d/* ; do
+		[ -x "$f" ] && . "$f"
+	done
+	unset f
+fi
+
+#set up terminus (and other) fonts
+xset +fp /usr/share/fonts/local
+xset fp rehash
+
+#swap control and capslock
+setxkbmap -option ctrl:swapcaps
+
+#prepare xmonad
+xrdb -merge ~/.Xresources
+xsetroot -cursor_name left_ptr
+feh --bg-scale  ~/.res/arch-bg.jpg
+
+#start nice programs
+urxvtd &
+emacs --daemon &
+unclutter &
+mpd &
+redshift -O 7000 &
+xmonad
+   Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = Top
+       , lowerOnStart = True
+       , commands = [ Run Date "%e[%H:%M]" "date" 60
+		    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{ <fc=grey>%date%</fc>"
+      }

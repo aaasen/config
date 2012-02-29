@@ -104,7 +104,7 @@ function md() { #mkdir and cd into it
 }
 
 function cd() { #cd into dir and then ls
-    builtin cd "${@:-$HOME}" && ls -cr
+    builtin cd "${@:-$HOME}" && ls -cr --color=auto --group-directories-first
 }
 
 function connected() { 
