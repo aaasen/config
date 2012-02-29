@@ -1,7 +1,7 @@
-~/.xmonad/xmonad.hs
-~/.Xresources
-~/.bash_profile
-~/.bashrc
-~/.dir_colors
-~/.xinitrc
-~/.xmobarrc
+/home/aasen/.xmonad/xmonad.hs
+/home/aasen/.Xresources
+/home/aasen/.bash_profile
+/home/aasen/.bashrc
+/home/aasen/.dir_colors
+/home/aasen/.xinitrc
+/home/aasen/.xmobarrc
