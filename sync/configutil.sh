@@ -66,7 +66,12 @@ arcconfig () {
     loadfileroster $1
     expandfiles
     cpfilestodir config
+    ls > pregz
     gzdir config
+    ls > postgz
+    echo "local config archived in \""`diff pregz postgz | grep -o ">.*" | grep -o "[^> ]*"`"\""
+    
+    rm {pre,post}gz
     rm -R config
 }
 
