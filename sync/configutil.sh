@@ -1,9 +1,7 @@
 #!/bin/bash
 
-#makes a backup of local config files for safety
-
-#copy files from fileroster into directory
-#tar and gzip that directory; name with date and time
+#various utilities for handling configuration files
+#run `source configutil.sh` and then use these functions interactively
 
 declare -a FILES
 arcconfigdir=$HOME/.arcconfig
@@ -102,15 +100,3 @@ commitconfig () {
 	git add ../home/`echo ${FILES[${i}]} | grep -Eo '[^/]+$'`
     done
 }
-
-#echo ${FILES[@]}
-
-#arcconfig fileroster
-
-#pullconfig
-
-#expandfiles fileroster
-
-#commitconfig
-
-#updateconfig
