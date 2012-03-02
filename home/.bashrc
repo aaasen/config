@@ -58,6 +58,9 @@ alias iyet="yaourt -Qi " #information about package
 alias sdown="sudo shutdown -h now"
 alias suspend="sudo pm-suspend"
 
+#cpu frequency scaling
+alias cfset="sudo cpufreq-set -r -g "
+
 #ssh
 alias ssh="ssh -C "
 alias sshfs="sshfs -C "
@@ -143,4 +146,9 @@ function bac() {
 function sshinit() {
     eval $(ssh-agent)
     ssh-add /home/aasen/.ssh/phenom
+}
+
+
+function cfsview() {
+    watch grep \"cpu MHz\" /proc/cpuinfo
 }
