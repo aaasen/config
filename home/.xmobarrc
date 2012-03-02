@@ -4,9 +4,10 @@
        , position = Top
        , lowerOnStart = True
        , commands = [ Run Date "%e[%H:%M]" "date" 60
+       	 	    , Run Com "ncmpcpp --now-playing" [] "mpd" 10
 		    , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ <fc=grey>%date%</fc>"
+       , template = "%StdinReader% } %mpd% { <fc=grey>%date%</fc>"
       }
