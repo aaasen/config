@@ -107,6 +107,15 @@ alias atiup="sudo rm /etc/ati/amdpcsdb && echo 'start xmonad and then run amdccl
 alias yget="cd ~/vid && youtube-dl -t "
 alias mplayer="mplayer -vo vaapi "
 
+#ncmpcpp
+alias n="ncmpcpp -s playlist "
+alias np="ncmpcpp pause"
+alias ns="ncmpcpp stop"
+alias nn="ncmpcpp next"
+alias nb="ncmpcpp prev"
+alias nu="ncmpcpp volume +10"
+alias nd="ncmpcpp volume -10"
+ 
 #feh geometry option is for tiling window managers only
 alias fehimg="feh --image-bg black -zZ. --geometry 1366x768"
 alias fehslide="fehimg -D 5"
