@@ -48,7 +48,7 @@ alias cget="pacman -Qdt | egrep -o '[a-z0-9-]+ '\ | sudo pacman -Rs || echo 'no 
 alias iget="pacman -Qi " #information about package
 
 #yaourt
-alias yet="sudo yaourt -S " #install package
+alias yet="yaourt -S " #install package
 alias syet="yaourt -Ss " #search package database
 alias uyet="sudo yaourt -Syu " #update system
 alias ryet="sudo yaourt -Rs " #remove package
