@@ -19,7 +19,7 @@ nbc = "#777777"
 --fbc = "#96fcfc"
 fbc = "#444444"
 
-quickCommands = ["chromium","eclipse","gimp","minecraft","thunar"]
+quickCommands = ["midori","chromium","gimp","minecraft"]
 
 defaultl = tiled ||| Mirror tiled ||| Full
    where
