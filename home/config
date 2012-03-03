@@ -1,0 +1,36 @@
+
+[settings]
+default-encoding=ISO-8859-1
+default-font-family=Sans
+monospace-font-family=Terminus
+default-font-size=15
+default-monospace-font-size=12
+javascript-can-open-windows-automatically=true
+enable-site-specific-quirks=true
+last-window-width=1366
+last-window-height=754
+last-panel-position=557
+last-panel-page=5
+show-statusbar=false
+toolbar-style=MIDORI_TOOLBAR_SMALL_ICONS
+toolbar-items=Back,Forward,Location,CompactMenu,
+load-on-startup=MIDORI_STARTUP_HOMEPAGE
+homepage=http://www.home.archlinux.ca
+download-folder=/home/aasen/dl
+text-editor=emacsclient -t
+location-entry-search=http://www.google.com/search?q=%s
+open-tabs-in-the-background=true
+enable-html5-database=true
+enable-html5-local-storage=true
+zoom-text-and-images=true
+maximum-cache-size=200
+identify-as=MIDORI_IDENT_FIREFOX
+user-agent=Mozilla/5.0 (X11; Linux; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Midori/0.4
+
+[extensions]
+libadblock.so=true
+libtoolbar-editor.so=true
+libaddons.so=true
+libcookie-manager.so=true
+libformhistory.so=true
+libshortcuts.so=true
