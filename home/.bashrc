@@ -69,6 +69,7 @@ alias spl="ssh phenom-loc"
 alias sfspg="sshfs phenom-glob:/home/aasen phenom/"
 alias sfspl="sshfs phenom-loc:/home/aasen phenom/"
 alias sfsu="fusermount -u ~/phenom"
+alias stunnel="screen ssh -vND 20482 phenom-glob"
 
 #miscellaneous super short names
 alias a="alsamixer"
@@ -125,6 +126,9 @@ alias fehslide="fehimg -D 5"
 alias fehfilter="sudo fehslide -A 'echo %F && rm %F'"
 alias fehsliderand="fehslide -z"
 
+#misc
+alias archey="archey3 --color white"
+
 #functions
 function md() { #mkdir and cd into it
     mkdir -p "$1" && cd "$1"
@@ -151,4 +155,12 @@ function sshinit() {
 
 function cfsview() {
     watch grep \"cpu MHz\" /proc/cpuinfo
+}
+
+function chromium-socks() {
+    port=20482
+    export SOCKS_SERVER=localhost:$port
+    export SOCKS_VERSION=5
+    chromium &
+    exit
 }
