@@ -93,9 +93,12 @@ updateconfig () {
 #copies local files into local clone of git repo then adds the changes to git
 #commitconfig(files)
 commitconfig () {
+    cat fileroster
     expandfiles fileroster
+    cat fileroster
     loadfileroster fileroster
     for (( i=0; i<${#FILES[@]}; i++ )); do
+	echo ${FILES[${i}]} ../home/`echo ${FILES[${i}]} | grep -Eo '[^/]+$'`
         cp ${FILES[${i}]} ../home/`echo ${FILES[${i}]} | grep -Eo '[^/]+$'`
 	git add ../home/`echo ${FILES[${i}]} | grep -Eo '[^/]+$'`
     done
