@@ -30,10 +30,6 @@ else
     PS1=$'\e[1m%B%m%b \e[0m\e[1;30m{\e[0m%~\e[1;30m}\e[0m '
 fi
 
-#sudo for autocompletion
-alias sudo="sudo "
-alias s="sudo"
-
 #ls
 alias ls="ls --color=auto --group-directories-first"
 alias la="ls -a" #all files
@@ -45,6 +41,9 @@ alias ..="cd .."
 alias j="cd .."
 alias ...="cd ../.."
 alias jj="cd ../.."
+
+#sudo
+alias s="sudo"
 
 #pacman
 alias pacman="pacman-color"
@@ -77,6 +76,10 @@ alias spl="ssh phenom-loc"
 alias sfspg="sshfs phenom-glob:/home/aasen phenom/"
 alias sfspl="sshfs phenom-loc:/home/aasen phenom/"
 alias sfsu="fusermount -u ~/phenom"
+
+#screen
+alias sc="screen"
+alias sr="screen -r"
 
 #miscellaneous super short names
 alias a="alsamixer"

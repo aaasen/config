@@ -103,3 +103,5 @@ commitconfig () {
 	git add ../home/`echo ${FILES[${i}]} | grep -Eo '[^/]+$'`
     done
 }
+
+commitconfig
