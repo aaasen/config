@@ -7,8 +7,8 @@ default-font-size=15
 default-monospace-font-size=12
 javascript-can-open-windows-automatically=true
 enable-site-specific-quirks=true
-last-window-width=1920
-last-window-height=1066
+last-window-width=1366
+last-window-height=754
 last-panel-position=557
 last-panel-page=5
 show-statusbar=false
@@ -25,12 +25,11 @@ zoom-text-and-images=true
 maximum-cache-size=200
 identify-as=MIDORI_IDENT_FIREFOX
 user-agent=Mozilla/5.0 (X11; Linux; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Midori/0.4
-clear-data=web-cookies,
 
 [extensions]
 libadblock.so=true
-libtoolbar-editor.so=true
-libaddons.so=true
 libcookie-manager.so=true
 libformhistory.so=true
 libshortcuts.so=true
+libtoolbar-editor.so=true
+libaddons.so=true

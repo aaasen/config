@@ -4,7 +4,7 @@
        , position = Top
        , lowerOnStart = True
        , commands = [ Run Date "%e[%H:%M]" "date" 60
-       	 	    , Run Com "ncmpcpp --now-playing" [] "mpd" 10
+              	    , Run Com "ncmpcpp --now-playing" [] "mpd" 10
 		    , Run StdinReader
                     ]
        , sepChar = "%"
