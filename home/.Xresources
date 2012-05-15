@@ -8,7 +8,10 @@ URxvt.font:-*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
 URxvt.scrollBar:off
 URxvt.background:Black
 URxvt.foreground:grey80
-!URxvt.transparent:on
-!URxvt.fading:20
+URxvt.transparent:on
+URxvt.fading:20
 URxvt.shading:20
 
+dzen2.font:-*-fixed-*-*-*-*-*-*-*-*-*-*-*-*
+dzen2.foreground:#22EE11
+dzen2.background:black

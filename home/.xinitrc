@@ -42,7 +42,7 @@ setxkbmap -option ctrl:swapcaps
 #prepare xmonad
 xrdb -merge ~/.Xresources
 xsetroot -cursor_name left_ptr
-feh --bg-scale  ~/.res/arch-bg.jpg
+feh --bg-scale  ~/.bg/orionnebula.jpg
 
 #start nice programs
 urxvtd &
@@ -50,4 +50,4 @@ emacs --daemon &
 unclutter &
 mpd &
 redshift -O 7000 &
-xmonad
+xmonad | dzen2

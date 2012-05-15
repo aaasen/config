@@ -112,7 +112,7 @@ alias cwicd="wicd-curses"
 #minecraft
 alias mine="java -Xmx4096M -Xms1024M -jar ~/.minecraft/minecraft.jar"
 #alias mineserver="cd /usr/local/games/minecraft && java -Xmx2048M -Xms1024M -jar server.jar nogui"
-alias minelogc="rm ~/hs_err_pid*.log"
+alias minelogc="rm ./hs_err_pid*.log"
 
 #graphics
 alias atiup="sudo rm /etc/ati/amdpcsdb && echo 'start xmonad and then run amdccle'"
@@ -135,6 +135,15 @@ alias fehimg="feh --image-bg black -zZ. --geometry 1366x768"
 alias fehslide="fehimg -D 5"
 alias fehfilter="sudo fehslide -A 'echo %F && rm %F'"
 alias fehsliderand="fehslide -z"
+
+#apache
+alias apaconf="sudo $EDITOR /etc/httpd/conf/httpd.conf"
+
+
+#system monitoring
+#alias sysmonsuite="$(htop) & $(urxvtc -e cfsview $) $(urxvtc -e sensors &)"
+
+
 
 #functions
 function md() { #mkdir and cd into it
