@@ -1,6 +1,6 @@
-   Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
-       , bgColor = "black"
-       , fgColor = "grey"
+   Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
+       , bgColor = "#222222"
+       , fgColor = "#aaaaaa"
        , position = Top
        , lowerOnStart = True
        , commands = [ Run Date "%e[%H:%M]" "date" 60

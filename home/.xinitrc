@@ -42,7 +42,7 @@ setxkbmap -option ctrl:swapcaps
 #prepare xmonad
 xrdb -merge ~/.Xresources
 xsetroot -cursor_name left_ptr
-feh --bg-scale  ~/.bg/orionnebula.jpg
+feh --bg-scale  ~/.bg/fedora/Spaceflare.jpg
 
 #start nice programs
 urxvtd &
@@ -50,4 +50,5 @@ emacs --daemon &
 unclutter &
 mpd &
 redshift -O 7000 &
-xmonad | dzen2
+xcompmgr -c -f -F -D 5&
+xmonad

@@ -139,6 +139,10 @@ alias fehsliderand="fehslide -z"
 #apache
 alias apaconf="sudo $EDITOR /etc/httpd/conf/httpd.conf"
 
+#firefox
+alias firefox="firefox -P dev"
+alias firedef="firefox -P default"
+
 
 #system monitoring
 #alias sysmonsuite="$(htop) & $(urxvtc -e cfsview $) $(urxvtc -e sensors &)"

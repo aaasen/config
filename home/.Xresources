@@ -8,9 +8,12 @@ URxvt.font:-*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
 URxvt.scrollBar:off
 URxvt.background:Black
 URxvt.foreground:grey80
-URxvt.transparent:on
-URxvt.fading:20
-URxvt.shading:20
+URxvt.depth:32
+URxvt.background: rgba:2222/2222/2222/eeee
+URxvt.blurRadius: 1x128
+#URxvt.transparent:on
+#URxvt.fading:20
+#URxvt.shading:30
 
 dzen2.font:-*-fixed-*-*-*-*-*-*-*-*-*-*-*-*
 dzen2.foreground:#22EE11
