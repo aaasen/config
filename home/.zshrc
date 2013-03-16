@@ -3,7 +3,7 @@ HISTFILE=~/.zshist
 HISTSIZE=1000
 SAVEHIST=2048
 setopt appendhistory autocd extendedglob nomatch notify
-bindkey -e
+bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/aasen/.zshrc'
@@ -22,12 +22,17 @@ fi
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export EDITOR=emacs
+export EDITOR=vim
 
 if [ -n "$SSH_CLIENT" ]; then
-    PS1=$'\e[1;32m%B%m%b \e[0m\e[1;30m{\e[0m%~\e[1;30m}\e[0m '
+    PS1="%{$fg[green]%}%B%m%b {%{$reset_color%}%{$fg[white]%}%{$reset_color%}%~} "
+#    PS1=$'%{\e[1;32%}m%B%m%b %{\e[0m%}%{\e[1;30m%}{%\e[0m%}%~%{\e[1;30m%}}%{\e[0m%} '
 else
-    PS1=$'\e[1m%B%m%b \e[0m\e[1;30m{\e[0m%~\e[1;30m}\e[0m '
+    PS1="%{$fg[black]%}%B%m%b {%{$reset_color%}%{$fg[white]%}%{$reset_color%}%~} "
+#    PS1=$'\e[1m%B%m%b \e[0m\e[1;30m{\e[0m%~\e[1;30m}\e[0m '
+#    PS1=$'\e[1m$%B%m%b \e[0m\e[1;30m${\e[0m%~\e[1;30m$}\e[0m '
+#    PS1=$'\e[0;31m$ \e[0m'
+#    PS1="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%~ %{$reset_color%}%% "
 fi
 
 #ls
@@ -75,7 +80,8 @@ alias spg="ssh phenom-glob"
 alias spl="ssh phenom-loc"
 alias sfspg="sshfs phenom-glob:/home/aasen phenom/"
 alias sfspl="sshfs phenom-loc:/home/aasen phenom/"
-alias sfsu="fusermount -u ~/phenom"
+alias sfsu="fusermount -u "
+alias sfsfire="sshfs firedove:/home4/benelabo/ ~/mnt/firedove"
 
 #screen
 alias sc="screen"
@@ -85,11 +91,14 @@ alias sr="screen -r"
 alias a="alsamixer"
 alias e="emacsclient -t"
 alias se="sudo emacs"
+alias v="vim"
+alias sv="sudo vim"
 alias n="nano"
 alias l="less"
 alias m="more" #hehe
 alias g="grep"
-alias eg="egrep"
+alias eg="grep -E"
+alias gr="grep -R --color"
 
 #archiving
 alias utar="tar -xf" #untar
@@ -109,10 +118,8 @@ alias rwicd="sudo rc.d restart wicd"
 alias netwicd="sudo rc.d stop network && sudo rc.d start wicd && wicd-curses"
 alias cwicd="wicd-curses"
 
-#minecraft
-alias mine="java -Xmx4096M -Xms1024M -jar ~/.minecraft/minecraft.jar"
-#alias mineserver="cd /usr/local/games/minecraft && java -Xmx2048M -Xms1024M -jar server.jar nogui"
-alias minelogc="rm ./hs_err_pid*.log"
+#games
+alias tf2="SDL_AUDIODRIVER=alsa LC_NUMERIC=POSIX steam steam://rungameid/440"
 
 #graphics
 alias atiup="sudo rm /etc/ati/amdpcsdb && echo 'start xmonad and then run amdccle'"
@@ -131,18 +138,17 @@ alias nu="ncmpcpp volume +10"
 alias nd="ncmpcpp volume -10"
 
 #feh geometry option is for tiling window managers only
-alias fehimg="feh --image-bg black -zZ. --geometry 1366x768"
+#alias fehimg="feh --image-bg black -zZ. --geometry 1366x768"
+alias fehimg="feh --image-bg black -Z. --geometry 1366x768"
 alias fehslide="fehimg -D 5"
-alias fehfilter="sudo fehslide -A 'echo %F && rm %F'"
 alias fehsliderand="fehslide -z"
 
 #apache
 alias apaconf="sudo $EDITOR /etc/httpd/conf/httpd.conf"
 
 #firefox
-alias firefox="firefox -P dev"
 alias firedef="firefox -P default"
-
+alias firedev="firefox -P dev -no-remote"
 
 #system monitoring
 #alias sysmonsuite="$(htop) & $(urxvtc -e cfsview $) $(urxvtc -e sensors &)"
@@ -150,6 +156,11 @@ alias firedef="firefox -P default"
 
 
 #functions
+
+function fehfilter() {
+	fehslide -A 'echo %F && mv %F /home/aasen/final/'
+}
+
 function md() { #mkdir and cd into it
     mkdir -p "$1" && cd "$1"
 }
@@ -175,4 +186,8 @@ function sshinit() {
 
 function cfsview() {
     watch grep \"cpu MHz\" /proc/cpuinfo
+}
+
+function gfind() {
+	grep -RE --color $1
 }
